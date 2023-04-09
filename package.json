@@ -1,7 +1,7 @@
 {
   "name": "@jlp277/redux-search",
-  "version": "1.0.3",
-  "description": "redux-search -----",
+  "version": "1.0.4",
+  "description": "redux-search @ Found",
   "scripts": {
     "build": "rollup -c"
   },
