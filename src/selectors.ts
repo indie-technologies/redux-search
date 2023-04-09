@@ -1,10 +1,26 @@
-/** @flow */
+export type Document = { id: number, name: string, description: string }
+
+export type ResourceName = string;
+
+type Resources = { [index: ResourceName]: string; }
+
+export type Result = Document[];
+
+export type Search = {
+  [index: ResourceName]: { isSearching: boolean; result: Result, text: string };
+}
+
+type State = { resources: Resources; search: Search; }
 
 /** Default state selector */
-export function defaultSearchStateSelector (state) {
+export function defaultSearchStateSelector (state: State): Search {
   return state.search
 }
 
+type ResultSelector = (state: State) => Result
+type TextSelector = (state: State) => string
+type SearchStateSelector = (state: State) => State['search']
+type ResourceSelector = (resourceName: string, state: State) => Document
 /**
  * Creates convenience selectors for the specified resource.
  *
@@ -18,7 +34,16 @@ export function getSearchSelectors ({
   resourceName,
   resourceSelector,
   searchStateSelector = defaultSearchStateSelector
-}) {
+}: {
+  filterFunction: () => any;
+  resourceName: ResourceName;
+  resourceSelector: ResourceSelector;
+  searchStateSelector: SearchStateSelector;
+}): {
+  text: TextSelector;
+  result: ResultSelector;
+  unfilteredResult: ResultSelector;
+} {
   return {
     text: getTextSelector({ resourceName, searchStateSelector }),
     result: getResultSelector({ filterFunction, resourceName, resourceSelector, searchStateSelector }),
@@ -35,7 +60,10 @@ export function getSearchSelectors ({
 export function getTextSelector ({
   resourceName,
   searchStateSelector = defaultSearchStateSelector
-}) {
+}: {
+  resourceName: string;
+  searchStateSelector: SearchStateSelector;
+}): TextSelector {
   return function textSelector (state) {
     return searchStateSelector(state)[resourceName].text
   }
@@ -44,10 +72,10 @@ export function getTextSelector ({
 /**
  * Creates a default filter function capable of handling Maps and Objects.
  */
-function createFilterFunction (resource) {
+function createFilterFunction (resource: any) {
   return resource.has instanceof Function
-    ? id => resource.has(id)
-    : id => resource[id]
+    ? (id: string) => resource.has(id)
+    : (id: string) => resource[id]
 }
 
 /**
@@ -64,10 +92,15 @@ export function getResultSelector ({
   resourceName,
   resourceSelector,
   searchStateSelector = defaultSearchStateSelector
-}) {
+}: {
+  filterFunction: () => Document;
+  resourceName: ResourceName;
+  resourceSelector: ResourceSelector;
+  searchStateSelector: SearchStateSelector;
+}): ResultSelector {
   const unfilteredResultSelector = getUnfilteredResultSelector({ resourceName, searchStateSelector })
 
-  return function resultSelector (state) {
+  return function resultSelector (state: State) {
     const result = unfilteredResultSelector(state)
     const resource = resourceSelector(resourceName, state)
 
@@ -84,10 +117,12 @@ export function getResultSelector ({
  */
 export function getUnfilteredResultSelector ({
   resourceName,
-  searchStateSelector = defaultSearchStateSelector
-}) {
+  searchStateSelector = defaultSearchStateSelector,
+}: {
+  resourceName: string;
+  searchStateSelector: SearchStateSelector;
+}): ResultSelector {
   return function resultSelector (state) {
     return searchStateSelector(state)[resourceName].result
   }
 }
-

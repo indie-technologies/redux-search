@@ -1,4 +1,3 @@
-/** @flow */
 import {
   INITIALIZE_RESOURCES,
   RECEIVE_RESULT,

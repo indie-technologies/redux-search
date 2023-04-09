@@ -1,4 +1,3 @@
-/** @flow */
 export const SEARCH_API = '@@reduxSearch/API'
 export const SEARCH_STATE_SELECTOR = '@@reduxSearch/searchStateSelector'
 
