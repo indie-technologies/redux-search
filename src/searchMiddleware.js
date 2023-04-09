@@ -7,7 +7,7 @@ import {
  * Middleware for interacting with the search API
  * @param {Search} Search object
  */
-export default function searchMiddleware (search: Object): Function {
+export default function searchMiddleware (search) {
   return ({ dispatch }) => next => action => {
     const { payload } = action
     if (action.type === SEARCH_API) {

@@ -1,11 +1,6 @@
 build
-codemods
-coverage
 docs
-source
+src
 .*
 *.md
-circle.yml
-index.html
-karma.conf.js
 webpack.config.*.js

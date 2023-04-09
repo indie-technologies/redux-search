@@ -9,7 +9,7 @@ import {
   RECEIVE_RESULT
 } from './constants'
 
-export function searchAPI (method: string): Object {
+export function searchAPI (method) {
   return (...args) => ({
     type: SEARCH_API,
     payload: {
@@ -22,8 +22,8 @@ export const defineIndex = searchAPI('defineIndex')
 export const indexResource = searchAPI('indexResource')
 export const performSearch = searchAPI('performSearch')
 
-export function search (resourceName: string): Function {
-  return function searchResource (text: string): Object {
+export function search (resourceName) {
+  return function searchResource (text) {
     return {
       type: ACTION,
       payload: {
@@ -40,8 +40,8 @@ export function search (resourceName: string): Function {
   }
 }
 
-export function receiveResult (resourceName: string): Function {
-  return function receiveResultForResource (result: Array<string>): Object {
+export function receiveResult (resourceName) {
+  return function receiveResultForResource (result) {
     return {
       type: RECEIVE_RESULT,
       payload: {
@@ -52,7 +52,7 @@ export function receiveResult (resourceName: string): Function {
   }
 }
 
-export function initializeResources (resourceNames: Array<string>): Object {
+export function initializeResources (resourceNames) {
   return {
     type: INITIALIZE_RESOURCES,
     payload: {

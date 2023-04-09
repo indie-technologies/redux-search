@@ -18,7 +18,7 @@ export function getSearchSelectors ({
   resourceName,
   resourceSelector,
   searchStateSelector = defaultSearchStateSelector
-}): Object {
+}) {
   return {
     text: getTextSelector({ resourceName, searchStateSelector }),
     result: getResultSelector({ filterFunction, resourceName, resourceSelector, searchStateSelector }),
@@ -35,7 +35,7 @@ export function getSearchSelectors ({
 export function getTextSelector ({
   resourceName,
   searchStateSelector = defaultSearchStateSelector
-}): Function {
+}) {
   return function textSelector (state) {
     return searchStateSelector(state)[resourceName].text
   }
@@ -64,7 +64,7 @@ export function getResultSelector ({
   resourceName,
   resourceSelector,
   searchStateSelector = defaultSearchStateSelector
-}): Function {
+}) {
   const unfilteredResultSelector = getUnfilteredResultSelector({ resourceName, searchStateSelector })
 
   return function resultSelector (state) {
@@ -85,7 +85,7 @@ export function getResultSelector ({
 export function getUnfilteredResultSelector ({
   resourceName,
   searchStateSelector = defaultSearchStateSelector
-}): Function {
+}) {
   return function resultSelector (state) {
     return searchStateSelector(state)[resourceName].result
   }
