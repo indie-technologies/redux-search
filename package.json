@@ -1,9 +1,10 @@
 {
   "name": "@jlp277/redux-search",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "redux-search @ Found",
   "scripts": {
-    "build": "rollup -c"
+    "clean": "rimraf dist/*",
+    "build": "npm run clean && rollup -c"
   },
   "repository": {
     "type": "git",
@@ -11,6 +12,7 @@
   },
   "module": "dist/index.esm.min.js",
   "main": "dist/index.esm.min.js",
+  "types": "dist/index.d.ts",
   "author": "James Park",
   "license": "MIT",
   "homepage": "https://github.com/jlp277/redux-search#readme",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^11.1.0",
+    "rimraf": "^5.0.0",
     "rollup": "^2.79.1",
     "tslib": "^2.5.0",
     "typescript": "^5.0.4"
