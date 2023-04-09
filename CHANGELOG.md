@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.0.5
+Add some basic TS
+
 # 1.0.4
 Initial commit
 - replace webpack for rollup
