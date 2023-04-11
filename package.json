@@ -1,6 +1,6 @@
 {
   "name": "@jlp277/redux-search",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "redux-search @ Found",
   "scripts": {
     "clean": "rimraf dist/*",
