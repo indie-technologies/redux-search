@@ -1,7 +1,9 @@
 import {
   defaultSearchStateSelector,
   getSearchSelectors
+// @ts-ignore
 } from './selectors'
+// @ts-ignore
 import { search } from './actions'
 // @ts-ignore
 import reduxSearch from './reduxSearch'

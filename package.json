@@ -1,6 +1,6 @@
 {
   "name": "@jlp277/redux-search",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "redux-search @ Found",
   "scripts": {
     "clean": "rimraf dist/*",
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/jlp277/redux-search.git"
   },
-  "module": "dist/index.esm.min.js",
-  "main": "dist/index.esm.min.js",
+  "module": "dist/index.esm.min.mjs",
+  "main": "dist/index.esm.min.mjs",
   "types": "dist/index.d.ts",
   "author": "James Park",
   "license": "MIT",
