@@ -1,6 +1,6 @@
 {
   "name": "@jlp277/redux-search",
-  "version": "1.0.9",
+  "version": "1.0.14",
   "description": "redux-search @ Found",
   "scripts": {
     "clean": "rimraf dist/*",
@@ -13,8 +13,7 @@
   "files": [
     "dist"
   ],
-  "module": "dist/index.esm.min.mjs",
-  "main": "dist/index.esm.min.mjs",
+  "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
   "author": "James Park",
   "license": "MIT",
@@ -24,6 +23,8 @@
     "redux": "^3.0.4"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^11.1.0",
     "rimraf": "^5.0.0",
