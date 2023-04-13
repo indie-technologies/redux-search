@@ -21,7 +21,7 @@
   "homepage": "https://github.com/jlp277/redux-search#readme",
   "dependencies": {
     "js-worker-search": "^2.0.0",
-    "redux": "^3.0.4"
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
