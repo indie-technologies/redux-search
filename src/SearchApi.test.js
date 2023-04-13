@@ -1,4 +1,3 @@
-import test from 'tape'
 import { INDEX_MODES } from 'js-worker-search'
 import SearchApi from './SearchApi'
 
@@ -24,48 +23,41 @@ function getSearchApi ({ indexMode, tokenizePattern, caseSensitive, matchAnyToke
 test('SearchApi should return documents ids for any searchable field matching a query', async t => {
   const searchApi = getSearchApi()
   const ids = await searchApi.performSearch('documents', 'One')
-  t.equal(ids.length, 1)
-  t.equal(ids[0], 1)
-  t.end()
+  expect(ids).toHaveLength(1)
+  expect(ids[0]).toEqual(1)
 })
 
 test('SearchApi should pass through the correct :indexMode for ALL_SUBSTRINGS', async t => {
   const searchApi = getSearchApi({ indexMode: INDEX_MODES.ALL_SUBSTRINGS })
 
   const matches = await searchApi.performSearch('documents', 'econ')
-  t.equal(matches.length, 1)
-  t.equal(matches[0], 2)
+  expect(matches).toHaveLength(1)
+  expect(matches[0]).toEqual(2)
 
   const noMatches = await searchApi.performSearch('documents', 'xyz')
-  t.equal(noMatches.length, 0)
-
-  t.end()
+  expect(noMatches).toHaveLength(0)
 })
 
 test('SearchApi should pass through the correct :indexMode for PREFIXES', async t => {
   const searchApi = getSearchApi({ indexMode: INDEX_MODES.PREFIXES })
 
   const matches = await searchApi.performSearch('documents', 'Thre')
-  t.equal(matches.length, 1)
-  t.equal(matches[0], 3)
+  expect(matches).toHaveLength(1)
+  expect(matches[0]).toEqual(3)
 
   const noMatches = await searchApi.performSearch('documents', 'econd')
-  t.equal(noMatches.length, 0)
-
-  t.end()
+  expect(noMatches).toHaveLength(0)
 })
 
 test('SearchApi should pass through the correct :indexMode for EXACT_WORDS', async t => {
   const searchApi = getSearchApi({ indexMode: INDEX_MODES.EXACT_WORDS })
 
   const matches = await searchApi.performSearch('documents', 'One')
-  t.equal(matches.length, 1)
-  t.equal(matches[0], 1)
+  expect(matches).toHaveLength(1)
+  expect(matches[0]).toEqual(1)
 
   const noMatches = await searchApi.performSearch('documents', 'seco')
-  t.equal(noMatches.length, 0)
-
-  t.end()
+  expect(noMatches).toHaveLength(0)
 })
 
 test('SearchApi should pass through the correct :tokenizePattern', async t => {
@@ -74,10 +66,8 @@ test('SearchApi should pass through the correct :tokenizePattern', async t => {
   })
 
   const matches = await searchApi.performSearch('documents', 'fourth')
-  t.equal(matches.length, 1)
-  t.equal(matches[0], 4)
-
-  t.end()
+  expect(matches).toHaveLength(1)
+  expect(matches[0]).toEqual(4)
 })
 
 test('SearchApi should pass through the correct :caseSensitive bit', async t => {
@@ -86,13 +76,11 @@ test('SearchApi should pass through the correct :caseSensitive bit', async t => 
   })
 
   let matches = await searchApi.performSearch('documents', 'Second')
-  t.equal(matches.length, 0)
+  expect(matches).toHaveLength(0)
 
   matches = await searchApi.performSearch('documents', 'second')
-  t.equal(matches.length, 1)
-  t.equal(matches[0], 2)
-
-  t.end()
+  expect(matches).toHaveLength(1)
+  expect(matches[0], 2)
 })
 
 test('SearchApi should pass through the correct :matchAnyToken bit', async t => {
@@ -101,9 +89,7 @@ test('SearchApi should pass through the correct :matchAnyToken bit', async t => 
   })
 
   const matches = await searchApi.performSearch('documents', 'first two second')
-  t.equal(matches.length, 2)
-  t.equal(matches[0], 2) // Second document has more matching tokens
-  t.equal(matches[1], 1)
-
-  t.end()
+  expect(matches).toHaveLength(2)
+  expect(matches[0], 2) // Second document has more matching tokens
+  expect(matches[1], 1)  
 })

@@ -1,7 +1,6 @@
 import { combineReducers, createStore } from 'redux'
 import reduxSearch from './reduxSearch'
 import reducer from './reducer'
-import test from 'tape'
 
 function createMiddleware (params = {}) {
   return reduxSearch(params)(createStore)(
@@ -35,8 +34,7 @@ class MockSearchApi {
 test('reduxSearch should subscribe to the specified searchApi', t => {
   const searchApi = new MockSearchApi()
   createMiddleware({ searchApi })
-  t.equal(searchApi.subscribeCalls.length, 1)
-  t.end()
+  expect(searchApi.subscribeCalls).toHaveLength(1)
 })
 
 test('reduxSearch should auto-index searchable resources if a resourceSelector is specified', t => {
@@ -51,17 +49,16 @@ test('reduxSearch should auto-index searchable resources if a resourceSelector i
 
   const store = createMiddleware({ resourceIndexes, resourceSelector, searchApi })
 
-  t.equal(resourceSelectorCalls.length, 0)
+  expect(resourceSelectorCalls).toHaveLength(0)
 
   // Simulate a resource update
   store.dispatch({ type: 'fakeResourceUpdate' })
 
   // Called once on resource-change and once after search has been re-run
-  t.equal(resourceSelectorCalls.length, 2)
-  t.equal(resourceSelectorCalls[0].resourceName, 'users')
-  t.equal(resourceSelectorCalls[1].resourceName, 'users')
-  t.equal(searchApi.indexResourceCalls.length, 1)
-  t.end()
+  expect(resourceSelectorCalls).toHaveLength(2)
+  expect(resourceSelectorCalls[0].resourceName, 'users')
+  expect(resourceSelectorCalls[1].resourceName, 'users')
+  expect(searchApi.indexResourceCalls).toHaveLength(1)
 })
 
 test('reduxSearch should auto-update index any time a searchable resource changes', t => {
@@ -77,20 +74,19 @@ test('reduxSearch should auto-update index any time a searchable resource change
 
   const store = createMiddleware({ resourceIndexes, resourceSelector, searchApi })
 
-  t.equal(resourceSelectorCalls.length, 0)
+  expect(resourceSelectorCalls).toHaveLength(0)
 
   // Simulate a resource update
   store.dispatch({ type: 'fakeResourceUpdate' })
 
   // Selector is called 3x (1x per changed resource, 1x more to verify no additional change)
-  t.equal(resourceSelectorCalls.length, 3)
-  t.equal(resourceSelectorCalls[0].resourceName, 'users')
-  t.equal(resourceSelectorCalls[1].resourceName, 'users')
-  t.equal(resourceSelectorCalls[2].resourceName, 'users')
+  expect(resourceSelectorCalls).toHaveLength(3)
+  expect(resourceSelectorCalls[0].resourceName).toEqual('users')
+  expect(resourceSelectorCalls[1].resourceName).toEqual('users')
+  expect(resourceSelectorCalls[2].resourceName).toEqual('users')
 
   // Index is built twice since our resource changed twice
-  t.equal(searchApi.indexResourceCalls.length, 2)
-  t.end()
+  expect(searchApi.indexResourceCalls).toHaveLength(2)
 })
 
 test('reduxSearch should not auto-index searchable resources if no resourceSelector is specified', t => {
@@ -101,6 +97,5 @@ test('reduxSearch should not auto-index searchable resources if no resourceSelec
   // Simulate a resource update
   store.dispatch({ type: 'fakeResourceUpdate' })
 
-  t.equal(searchApi.indexResourceCalls.length, 0)
-  t.end()
+  expect(searchApi.indexResourceCalls).toHaveLength(0)
 })

@@ -1,6 +1,4 @@
 /** Tests search actions, reducers, and selectors. */
-import test from 'tape'
-import Immutable from 'immutable'
 import {
   initializeResources,
   receiveResult,
@@ -21,11 +19,10 @@ test('getSearchSelectors should return a wrapper containing the correct default 
     resourceName: RESOURCE_NAME,
     resourceSelector: () => {}
   })
-  t.equal(Object.keys(wrapper).length, 3)
-  t.ok(wrapper.result instanceof Function)
-  t.ok(wrapper.text instanceof Function)
-  t.ok(wrapper.unfilteredResult instanceof Function)
-  t.end()
+  expect(Object.keys(wrapper).length).to.equal(3)
+  expect(wrapper.result instanceof Function).to.equal(true)
+  expect(wrapper.text instanceof Function).to.equal(true)
+  expect(wrapper.unfilteredResult instanceof Function).to.equal(true)
 })
 
 function intializeState ({
@@ -51,8 +48,7 @@ function intializeState ({
 test('getTextSelector should return text provided by the default :searchStateSelector', t => {
   const state = intializeState()
   const selector = getTextSelector({ resourceName: RESOURCE_NAME })
-  t.equal(selector(state), 'brian')
-  t.end()
+  expect(selector(state)).to.equal('brian')
 })
 
 test('getTextSelector should invoke the custom :searchStateSelector if provided', t => {
@@ -66,17 +62,16 @@ test('getTextSelector should invoke the custom :searchStateSelector if provided'
     }
   })
   selector(state)
-  t.equal(calls.length, 1)
-  t.equal(calls[0], state)
-  t.end()
+  expect(calls).toHaveLength(1)
+  expect(calls[0]).to.equal(state)
 })
 
 test('getResultSelector should remove resources that are no longer in the resource Map', t => {
   const state = intializeState({
-    resource: Immutable.Map({
+    resource: {
       brian: {},
       fernando: {}
-    }),
+    },
     result: ['brian', 'cesar', 'fernando']
   })
   const selector = getResultSelector({
@@ -84,10 +79,9 @@ test('getResultSelector should remove resources that are no longer in the resour
     resourceSelector: (resourceName, state) => state.resources[resourceName]
   })
   const result = selector(state)
-  t.equal(result.length, 2)
-  t.ok(result.includes('brian'))
-  t.ok(result.includes('fernando'))
-  t.end()
+  expect(result.length).to.equal(2)
+  expect(result.includes('brian')).to.equal(true)
+  expect(result.includes('fernando')).to.equal(true)
 })
 
 test('getResultSelector should remove resources that are no longer in the resource Array', t => {
@@ -103,10 +97,10 @@ test('getResultSelector should remove resources that are no longer in the resour
     resourceSelector: (resourceName, state) => state.resources[resourceName]
   })
   const result = selector(state)
-  t.equal(result.length, 2)
-  t.ok(result.includes('brian'))
-  t.ok(result.includes('fernando'))
-  t.end()
+  expect(result).toHaveLength(2)
+
+  expect(result).toContain('brian')
+  expect(result).toContain('fernando')
 })
 
 test('getResultSelector should invoke the custom :filterFunction if provide', t => {
@@ -123,19 +117,18 @@ test('getResultSelector should invoke the custom :filterFunction if provide', t 
     resourceSelector: (resourceName, state) => state.resources[resourceName]
   })
   selector(state)
-  t.equal(calls.length, 3)
-  t.ok(calls.includes('brian'))
-  t.ok(calls.includes('cesar'))
-  t.ok(calls.includes('fernando'))
-  t.end()
+  expect(calls).toHaveLength(3)
+  expect(calls).toContain('brian')
+  expect(calls).toContain('cesar')
+  expect(calls).toContain('fernando')
 })
 
 test('getUnfilteredResultSelector should not remove resources that are no longer in the resource collection', t => {
   const state = intializeState({
-    resource: Immutable.Map({
+    resource: {
       brian: {},
       fernando: {}
-    }),
+    },
     result: ['brian', 'cesar', 'fernando']
   })
   const selector = getUnfilteredResultSelector({
@@ -143,9 +136,8 @@ test('getUnfilteredResultSelector should not remove resources that are no longer
     resourceSelector: (resourceName, state) => state.resources[resourceName]
   })
   const result = selector(state)
-  t.equal(result.length, 3)
-  t.ok(result.includes('brian'))
-  t.ok(result.includes('cesar'))
-  t.ok(result.includes('fernando'))
-  t.end()
+  expect(result).toHaveLength(3)
+  expect(result).toContain('brian')
+  expect(result).toContain('cesar')
+  expect(result).toContain('fernando')
 })
