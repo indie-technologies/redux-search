@@ -69,7 +69,7 @@ export default function reduxSearch ({
             currentResources[resourceName] = resource
 
             const resourceIndex = resourceIndexes[resourceName]
-            const searchString = searchState[resourceName].text
+            const searchString = searchState[resourceName] ? searchState[resourceName].text : ''
 
             store.dispatch(actions.indexResource({
               fieldNamesOrIndexFunction: resourceIndex,
